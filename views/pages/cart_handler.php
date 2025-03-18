@@ -14,5 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         echo json_encode($response);
         exit();
     }
+
+    if ($_POST['action'] === 'remove') {
+        $productId = $_POST['product_id'];
+        $userId = $_POST['user_id'];
+        $result = $cartController->removeFromCart($userId, $productId);
+        echo json_encode($result);
+        exit;
+    }
 }
 ?>

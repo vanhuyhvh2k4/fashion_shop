@@ -50,7 +50,7 @@ class Cart {
     public function getCart($userId) {
         try {
             $stmt = $this->conn->prepare("
-                SELECT cart.id, cart.product_id, cart.quantity, products.name, products.price, products.image 
+                SELECT cart.id, cart.product_id, cart.quantity, products.name, products.stock, products.image 
                 FROM cart 
                 JOIN products ON cart.product_id = products.id
                 WHERE cart.user_id = ?
