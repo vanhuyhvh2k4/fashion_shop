@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 class Product {
     private $conn;
@@ -28,6 +28,20 @@ class Product {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function findByName($keyword) {
+        try {
+            // Fixed SQL syntax - using LIKE with wildcards in the parameter
+            $sql = "SELECT * FROM products WHERE name LIKE ?";
+            $stmt = $this->conn->prepare($sql);
+            // Add wildcards to the keyword itself
+            $stmt->execute(["$keyword%"]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
     public function update($id, $name, $price, $stock, $image, $category_id) {
         $sql = "UPDATE products SET name=?, price=?, stock=?, image=?, category_id=? WHERE id=?";
         $stmt = $this->conn->prepare($sql);

@@ -1,5 +1,5 @@
 <?php
-require_once '../models/Product.php';
+require_once __DIR__ . '/../models/Product.php';
 
 class ProductController {
     private $productModel;
@@ -10,6 +10,26 @@ class ProductController {
 
     public function index() {
         return $this->productModel->getAll();
+    }
+
+    public function searchProduct($keyword) {
+        // Validate input
+        if (empty(trim($keyword))) {
+            return ['notfound' => 'Search keyword cannot be empty'];
+        }
+    
+        // Sanitize input (basic example)
+        $keyword = htmlspecialchars(trim($keyword));
+    
+        // Get product
+        $products = $this->productModel->findByName($keyword);
+    
+        // Check if product is empty return message else return products
+        if (empty($products)) {
+            return ['notfound' => 'No products found matching "' . $keyword . '"'];
+        } else {
+            return ['products' => $products]; // Return found products
+        }
     }
 
     public function store($data, $file) {
