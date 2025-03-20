@@ -421,7 +421,7 @@ $products = $productController->index();
                 let productId = $(this).data("product-id");
 
                 $.ajax({
-                    url: "cart_handler.php",
+                    url: "../Handlers/cart_handler.php",
                     type: "POST",
                     data: {
                         action: "addToCart",

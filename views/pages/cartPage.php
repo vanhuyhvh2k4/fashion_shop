@@ -174,7 +174,7 @@ if (isset($_SESSION['user'])) {
             let userId = <?php echo isset($_SESSION['user']['Id']) ? json_encode($_SESSION['user']['Id']) : 'null'; ?>;
 
             $.ajax({
-                url: "cart_handler.php", // Adjust this path to your route/controller handler
+                url: "../Handlers/cart_handler.php", // Adjust this path to your route/controller handler
                 type: "POST",
                 data: { action: "remove", product_id: productId, user_id: userId },
                 success: function (response) {
